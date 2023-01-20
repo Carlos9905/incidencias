@@ -23,9 +23,9 @@ class Employee(models.Model):
         default=lambda self: self.env.user.company_id.currency_id,
     )
     monto = fields.Float("Monto")#1000 -> Esta es la deuda total
-    saldo = fields.Float("Saldo", compute="_get_monto", store=True, copy=False)#800 -> 800 - 500
+    saldo = fields.Float("Saldo", store=True)#800 -> 800 - 500
     aportacion = fields.Float("Aportación")#200 -> 0 ->300
-    fecha = fields.Datetime("Fecha y Hora")
+    fecha = fields.Datetime("Fecha y Hora", default=datetime.now())
     notas = fields.Text("Notas")
     unidad = fields.Many2one("fleet.vehicle", string="Unidad")
 
@@ -41,14 +41,14 @@ class Employee(models.Model):
             ) or ("Nuevo")
         return super(Employee, self).create(vals)
 
-    @api.depends("monto")
+    @api.onchange("monto")
     def _get_monto(self):
-        for rec in self:
-            rec.saldo = rec.monto
+        self.saldo = self.monto
+
     @api.onchange("aportacion")
     def resta(self):
         self.saldo = self.saldo - self.aportacion
-        if self.saldo == 0.0:
+        if self.saldo == 0.0 and self.valido == True:
             self.state = 'close'
         else:
             self.state = 'open'
@@ -57,7 +57,7 @@ class Employee(models.Model):
     def _get_cuotas(self):
         #motivos = self.tipo_incidencia.mapped("motivos_ids").mapped("id")
         #if motivos:
-        return {"domain": {"motivo_id": [("tipo_incidencia_id", "=", self.tipo_incidencia)]}}
+        return {"domain": {"motivo_id": [("tipo_incidencia_id", "=", self.tipo_incidencia.id)]}}
 
     def action_cancel(self):
         for rec in self:

@@ -24,22 +24,29 @@
             <form>
                 <header>
                     <field name="state" widget="statusbar" clickable="False" statusbar_visible="open,close,cancel"/>
+                    <button name="action_cancel" type="object" string="Cancelar" class="btn-primary" />
                 </header>
-                <div class = "oe_title">
-                    <h2>
-                        <field name="numero"/>
-                    </h2>
-                </div>
+                
                 <sheet>
-                    <group string="Documento">
-                        <field name="fecha" attrs="{'readonly':[('state', 'in', ['open', 'cancel'])]}" required="1"/>
-                        <field name="empleado" attrs="{'readonly':[('state', 'in', ['open', 'cancel'])]}" required="1"/>
-                        <field name="tipo_incidencia" attrs="{'readonly':[('state', 'in', ['open', 'cancel'])]}" required="1"/>
-                        <field name="motivo_id" attrs="{'readonly':[('state', 'in', ['open', 'cancel'])]}" required="1"/>
-                        <field name="monto" attrs="{'readonly':[('state', 'in', ['open', 'cancel'])]}" required="1"/>
-                        <field name="aportacion" />
-                        <field name="saldo" />
-                        <field name="unidad" attrs="{'readonly':[('state', 'in', ['open', 'cancel'])]}" required="1"/>
+                    <div class = "oe_title">
+                        <h2>
+                            <field name="numero"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group string="Empleado">
+                            <field name="fecha" attrs="{'readonly':[('state', '!=', 'open')]}" required="1"/>
+                            <field name="empleado" attrs="{'readonly':[('state', '!=', 'open')]}"  required="1"/>
+                            <field name="tipo_incidencia" attrs="{'readonly':[('state', '!=', 'open')]}"  required="1"/>
+                            <field name="motivo_id" attrs="{'readonly':[('state', '!=', 'open')]}"  required="1"/>
+                        </group>
+                        <group string="Motivo">
+                            <field name="currency_id" invisible="1"/>
+                            <field name="monto" attrs="{'readonly':[('state', '!=', 'open')]}"  widget='monetary' options="{'currency_field': 'currency_id'}" required="1"/>
+                            <field name="aportacion" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <field name="saldo" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <field name="unidad" attrs="{'readonly':[('state', '!=', 'open')]}"  required="1"/>
+                        </group>
                     </group>
                     <group string= "Notas">
                         <field name="notas" placeholder="Escribe tus notas aquí (opcional)" nolabel="1"/>
