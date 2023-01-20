@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="menu_action_incidencia_empleado" model="ir.actions.act_window">
+        <field name="name">Incidencias</field>
+        <field name="res_model">incidencia.empleado</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_incidencia_empleado_root" name="Incidencias" parent="hr.menu_hr_root"/>
+    <menuitem id="menu_incidencia_empleado" name="Incidencias" parent="menu_incidencia_empleado_root" action="menu_action_incidencia_empleado"/>
+
+    <record id="menu_action_tipo_incidencia" model="ir.actions.act_window">
+        <field name="name">Tipo de insidencias</field>
+        <field name="res_model">tipo.incidencia</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="menu_tipo_incidencia" name="Tipo de insidencias" parent="menu_incidencia_empleado_root" action="menu_action_tipo_incidencia"/>
+    <record id="menu_action_motivo_incidencia" model="ir.actions.act_window">
+        <field name="name">Motivos de insidencias</field>
+        <field name="res_model">motivo.incidencia</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="menu_motivo_incidencia" name="Motivos de insidencias" parent="menu_incidencia_empleado_root" action="menu_action_motivo_incidencia"/>
+
+</odoo>

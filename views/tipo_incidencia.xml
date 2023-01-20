@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_tipo_incidencia_tree" model="ir.ui.view">
+        <field name="name">tipo.incidencia.tree</field>
+        <field name="model">tipo.incidencia</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <tree string="Tipos de incidencias" editable="bottom">
+                <field name="name" required="1"/>
+                <!--<field name="motivos_ids" widget="many2many_tags" options="{'no_quick_create': True, 'no_create_edit' : True}"/>-->
+            </tree>
+        </field>
+    </record>
+    <record id="view_motivo_incidencia_tree" model="ir.ui.view">
+        <field name="name">motivo.incidencia.tree</field>
+        <field name="model">motivo.incidencia</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <tree string="Tipos de incidencias" editable="bottom">
+                <field name="nombre" required="1"/>
+                <field name="tipo_incidencia_id" required="1"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

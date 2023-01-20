@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tipo_incidencia_user,incidencias.tipo.incidencia,model_tipo_incidencia,base.group_user,1,1,1,1
+access_motivo_incidencia_user,incidencias.motivo.incidencia,model_motivo_incidencia,base.group_user,1,1,1,1
+access_incidencia_empleado_user,incidencias.incidencia.empleado,model_incidencia_empleado,base.group_user,1,1,1,1
