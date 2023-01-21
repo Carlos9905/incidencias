@@ -24,6 +24,7 @@ class Employee(models.Model):
     )
     monto = fields.Float("Monto")#1000 -> Esta es la deuda total
     saldo = fields.Float("Saldo", store=True)#800 -> 800 - 500
+    x_saldo = fields.Float("Saldo", compute="_get_saldo", store=True)
     aportacion = fields.Float("Aportación")#200 -> 0 ->300
     fecha = fields.Datetime("Fecha y Hora", default=datetime.now())
     notas = fields.Text("Notas")
@@ -52,6 +53,11 @@ class Employee(models.Model):
             self.state = 'close'
         else:
             self.state = 'open'
+
+    @api.depends("saldo")
+    def _get_saldo(self):
+        for record in self:
+            record.x_saldo = record.saldo
 
     @api.onchange("tipo_incidencia")
     def _get_cuotas(self):

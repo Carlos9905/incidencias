@@ -5,13 +5,13 @@
         <field name="model">incidencia.empleado</field>
         <field name="priority">1</field>
         <field name="arch" type="xml">
-            <tree>
-                <field name="numero" />
+            <tree string = "Incidencias" sample="1">
+                <field name="numero" decoration-bf="1"/>
                 <field name="empleado" />
-                <field name="tipo_incidencia" />
+                <field name="tipo_incidencia" widget="date"/>
                 <field name="fecha" />
                 <field name="unidad"/>
-                <field name="state" />
+                <field name="state" widget="badge" decoration-success="state=='open'" decoration-warning="state =='close'" decoration-danger="state =='cancel'"/>
             </tree>
         </field>
     </record>
@@ -26,7 +26,7 @@
                     <field name="state" widget="statusbar" clickable="False" statusbar_visible="open,close,cancel"/>
                     <button name="action_cancel" type="object" string="Cancelar" class="btn-primary" />
                 </header>
-                
+
                 <sheet>
                     <div class = "oe_title">
                         <h2>
@@ -36,16 +36,17 @@
                     <group>
                         <group string="Empleado">
                             <field name="fecha" attrs="{'readonly':[('state', '!=', 'open')]}" required="1"/>
-                            <field name="empleado" attrs="{'readonly':[('state', '!=', 'open')]}"  required="1"/>
-                            <field name="tipo_incidencia" attrs="{'readonly':[('state', '!=', 'open')]}"  required="1"/>
-                            <field name="motivo_id" attrs="{'readonly':[('state', '!=', 'open')]}"  required="1"/>
+                            <field name="empleado" attrs="{'readonly':[('state', '!=', 'open')]}" required="1"/>
+                            <field name="tipo_incidencia" attrs="{'readonly':[('state', '!=', 'open')]}" required="1"/>
+                            <field name="motivo_id" attrs="{'readonly':[('state', '!=', 'open')]}" domain="[('tipo_incidencia_id','=', tipo_incidencia)]" context="{'default_tipo_incidencia_id': tipo_incidencia}" required="1"/> <!-- context creo que se refiere a aasigar un valor por defecto a un many 2 one-->
                         </group>
                         <group string="Motivo">
                             <field name="currency_id" invisible="1"/>
-                            <field name="monto" attrs="{'readonly':[('state', '!=', 'open')]}"  widget='monetary' options="{'currency_field': 'currency_id'}" required="1"/>
+                            <field name="monto" attrs="{'readonly':[('state', '!=', 'open')]}" widget='monetary' options="{'currency_field': 'currency_id'}" required="1"/>
                             <field name="aportacion" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                            <field name="saldo" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                            <field name="unidad" attrs="{'readonly':[('state', '!=', 'open')]}"  required="1"/>
+                            <field name="saldo" invisible="1"/>
+                            <field name="x_saldo" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <field name="unidad" attrs="{'readonly':[('state', '!=', 'open')]}" required="1"/>
                         </group>
                     </group>
                     <group string= "Notas">
