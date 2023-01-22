@@ -11,7 +11,8 @@ class Employee(models.Model):
 
     state = fields.Selection(
         string="Estado",
-        selection=[("open", "Abierto"), ("close", "Cerrado"), ("cancel", "Cancelado")],
+        selection=[("draft", "Borrador"),("open", "Abierto"), ("close", "Cerrado"), ("cancel", "Cancelado")],
+        default="draft"
     )
     empleado = fields.Many2one("hr.employee", string="Empleado")
     valido = fields.Boolean("Valido", default=False)
@@ -45,7 +46,7 @@ class Employee(models.Model):
     @api.onchange("monto")
     def _get_monto(self):
         self.saldo = self.monto
-
+    """
     @api.onchange("aportacion")
     def resta(self):
         self.saldo = self.saldo - self.aportacion
@@ -53,7 +54,19 @@ class Employee(models.Model):
             self.state = 'close'
         else:
             self.state = 'open'
-
+    """
+    def cal_resta(self):
+        for record in self:
+            record.saldo = record.saldo - record.aportacion
+            if record.saldo == 0.0 and record.valido == True:
+                record.state = 'close'
+            else:
+                record.state = 'open'
+            if record.saldo < 0:
+                raise UserError(
+                    _("Monto fuera de rango")
+                )
+    
     @api.depends("saldo")
     def _get_saldo(self):
         for record in self:
