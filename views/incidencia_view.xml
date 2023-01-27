@@ -8,8 +8,8 @@
             <tree string = "Incidencias" sample="1">
                 <field name="numero" decoration-bf="1"/>
                 <field name="empleado" />
-                <field name="tipo_incidencia" widget="date"/>
-                <field name="fecha" />
+                <field name="tipo_incidencia"/>
+                <field name="fecha" widget="date"/>
                 <field name="unidad"/>
                 <field name="state" widget="badge" decoration-success="state=='open'" decoration-warning="state =='close'" decoration-danger="state =='cancel'"/>
             </tree>
@@ -50,9 +50,28 @@
                             <button name="cal_resta" type="object" string="Registrar" class="btn-default" />
                         </group>
                     </group>
-                    <group string= "Notas">
-                        <field name="notas" placeholder="Escribe tus notas aquí (opcional)" nolabel="1"/>
-                    </group>
+                    <notebook>
+                         <page name="TabHistorico" string="Historico">
+                            <field name="lineas_historicos_ids" readonly="1" deletetable="false">
+                                <tree>
+                                    <field name="numero"/>
+                                    <field name="empleado"/>
+                                    <field name="tipo_incidencia"/>
+                                    <field name="saldo"/>
+                                    <field name="aportacion"/>
+                                    <field name="fecha"/>
+                                    <field name="unidad"/>
+                                    <field name="motivo_id"/>
+                                    <field name="incidencia_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="TabNota" string="Notas">
+                            <group string= "Notas">
+                                <field name="notas" placeholder="Escribe tus notas aquí (opcional)" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
