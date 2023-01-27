@@ -70,7 +70,7 @@ class Employee(models.Model):
                     _("Monto fuera de rango"))
                 
             historico = self.env["historico.incidencia"]
-            historico.create([
+            historico.create({
                 "incidencia_id":record.id,
                 "empleado": record.empleado.id,
                 "numero":record.numero,
@@ -82,7 +82,7 @@ class Employee(models.Model):
                 "unidad":record.unidad,
                 "motivo_id":record.motivo_id.id,
                 "incidencia_id":record.incidencia_id.id
-            ])
+            })
             
         
             
@@ -137,7 +137,7 @@ class MotivoIncidencia(models.Model):
     
 class Historico(models.Model):
     _name='historico.incidencia'
-    _rec_name="nombre"
+    _rec_name="empleado"
     _description = "Historico de incidencia"
     
     
